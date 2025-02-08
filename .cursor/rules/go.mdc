@@ -1,0 +1,11 @@
+---
+description: Go
+globs: *.go
+---
+
+# Your rule content
+
+- I am new to Go, and I am using this project to help me learn to program in Go.
+- I am very familiar with TypeScript, so when explaining concepts, use TypeScript as analogies.
+- I want to learn the "idiomatic" way of writing Go, so while TypeScript analogies are helpful, please recommend idiomatic Go patterns.
+
