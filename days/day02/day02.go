@@ -9,28 +9,26 @@ import (
 
 // levelIsSafe checks if numbers differ by 1-3 in a consistently ascending or descending sequence
 func levelIsSafe(level []int) bool {
-	ascending := level[0] < level[1]
-
-	for i := 0; i < len(level)-1; i++ {
-		if ascending {
-			if level[i+1] < level[i]+1 || level[i+1] > level[i]+3 {
-				return false
-			}
-		}
-
-		if !ascending {
-			if level[i+1] > level[i]-1 || level[i+1] < level[i]-3 {
-				return false
-			}
-		}
-
+	if len(level) < 2 {
+		return true
 	}
 
+	ascending := level[0] < level[1]
+	for i := 1; i < len(level); i++ {
+		diff := level[i] - level[i-1]
+
+		if ascending && (diff < 1 || diff > 3) {
+			return false
+		}
+
+		if !ascending && (diff > -1 || diff < -3) {
+			return false
+		}
+	}
 	return true
 }
 
 func Solve() int {
-
 	input, err := os.ReadFile("./days/day02/input.txt")
 	utils.Check(err)
 
@@ -43,7 +41,7 @@ func Solve() int {
 		levels := make([]int, 0)
 
 		for _, level := range split {
-			parsed, err := strconv.ParseInt(level, 10, 0)
+			parsed, err := strconv.Atoi(level)
 			if err != nil {
 				panic(err)
 			}
