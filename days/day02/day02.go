@@ -9,6 +9,8 @@ import (
 
 // levelIsSafe checks if numbers differ by 1-3 in a consistently ascending or descending sequence
 func levelIsSafe(level []int) bool {
+	hasUsedDampener := false
+
 	if len(level) < 2 {
 		return true
 	}
@@ -18,11 +20,26 @@ func levelIsSafe(level []int) bool {
 		diff := level[i] - level[i-1]
 
 		if ascending && (diff < 1 || diff > 3) {
-			return false
+			if hasUsedDampener {
+				return false
+			}
+
+			diff = level[i+1] - level[i-1]
+			if diff < 1 || diff > 3 {
+				hasUsedDampener = true
+			}
 		}
 
 		if !ascending && (diff > -1 || diff < -3) {
-			return false
+			if hasUsedDampener {
+				return false
+			}
+
+			diff = level[i+1] - level[i-1]
+			if diff > -1 || diff < -3 {
+				hasUsedDampener = true
+			}
+
 		}
 	}
 	return true
