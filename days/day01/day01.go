@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func Solve() int {
+func Solve() (int, int) {
 	input, err := os.ReadFile("./days/day01/input.txt")
 	utils.Check(err)
 
@@ -33,6 +33,7 @@ func Solve() int {
 	sort.Slice(list2, func(i, j int) bool { return list2[i] < list2[j] })
 
 	distance := 0
+	counts := make(map[int]int)
 
 	// Go through each pair and add them up
 	for idx, val := range list1 {
@@ -43,7 +44,18 @@ func Solve() int {
 		}
 
 		distance += int(diff)
+
+		counts[list2[idx]]++
+
 	}
 
-	return distance
+	// Similartiy
+	similarity := 0
+
+	for _, val := range list1 {
+		similarity += val * counts[val]
+
+	}
+
+	return distance, similarity
 }
